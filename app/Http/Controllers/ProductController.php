@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ProductModel;
 
 class ProductController extends Controller
 {
+    private $objProduct;
+    public function __construct(){
+        $this->objProduct=new ProductModel();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('crud_products');
     }
 
     /**
@@ -34,7 +40,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $cad= $this->objProduct->create([
+            'nome'=>$request->name,
+            'descricao'=>$request->description,
+            'preco'=>$request->price
+        ]);
+        if($cad){
+            return redirect('/#products')->with('status', 'Produto Cadastrado Com Sucesso!');;
+        }
     }
 
     /**
@@ -45,7 +58,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

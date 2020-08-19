@@ -5,7 +5,7 @@
     <div class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Tabela de vendas
-                <a href='{{url("/products")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
+                <a href='{{url("/sales")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
             <form>
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
@@ -150,11 +150,19 @@
         </div>
     </div>
 
-    <div class='card mt-3'>
+    <div id='products' class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Produtos
-                <a href='{{url("/sales")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Novo produto</a></h5>
-            <table class='table'>
+            <a href='{{url("products")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Novo produto</a></h5>
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('status') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            <table class='table text-center'>
                 <tr>
                     <th scope="col">
                         Nome
@@ -166,39 +174,21 @@
                         Ações
                     </th>
                 </tr>
+                @foreach($product as $product)
                 <tr>
                     <td>
-                        Perfect Caps
+                    {{$product->nome}}
                     </td>
                     <td>
-                        R$ 100,00
+                    R$ {{$product->preco}}
                     </td>
                     <td>
                         <a href='' class='btn btn-primary'>Editar</a>
+                        <a href='' class='btn btn-danger'>Deletar</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        Nature Caps
-                    </td>
-                    <td>
-                        R$ 120,00
-                    </td>
-                    <td>
-                        <a href='' class='btn btn-primary'>Editar</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Libid Caps
-                    </td>
-                    <td>
-                        R$ 150,00
-                    </td>
-                    <td>
-                        <a href='' class='btn btn-primary'>Editar</a>
-                    </td>
-                </tr>
+                @endforeach 
+                
             </table>
         </div>
     </div>

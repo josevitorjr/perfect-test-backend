@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ProductModel;
 
 class DashboardController extends Controller
 {
+    private $objProduct;
+    public function __construct(){
+        $this->objProduct=new ProductModel();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,6 +18,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $product = $this->objProduct->all();
+        return view('dashboard', compact('product'));
     }
 }
