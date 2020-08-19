@@ -18,7 +18,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $product = $this->objProduct->all();
-        return view('dashboard', compact('product'));
+        $products = $this->objProduct->all();
+        return view('dashboard', compact('products'));
     }
 }

@@ -9,8 +9,11 @@ Telas para ver o funcionamento sem dados
 */
 Route::get('/', 'DashboardController@index');
 
-Route::get('/products', 'ProductController@create');
+Route::get('/products/create', 'ProductController@create');
 Route::post('/products', 'ProductController@store');
+
+Route::get('/products/{id}/edit', 'ProductController@edit');
+Route::put('/products/{id}', 'ProductController@update');
 
 Route::get('/products/{id}', 'ProductController@show');
 

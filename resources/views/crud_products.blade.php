@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <h1>Adicionar / Editar Produto</h1>
+    <h1>@if(!isset($product))Adicionar Produto @else Editar Produto @endif</h1>
     <div class='card'>
         <div class='card-body'>
         @if(isset($errors) && count($errors)>0)
@@ -14,19 +14,46 @@
                 </button>
             </div>
         @endif
+        @if(!isset($product))
             <form method="post" action="{{url('products')}}">
+        @else
+            <form method="post" action='{{url("products/$product->id")}}'>
+            @method('PUT')
+        @endif
                 @csrf
                 <div class="form-group">
                     <label for="name">Nome do produto</label>
-                    <input type="text" class="form-control " id="name" name="name" required>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="name" 
+                        name="name" 
+                        value="{{$product->nome ?? ''}}"
+                        required
+                    >
                 </div>
                 <div class="form-group">
                     <label for="description">Descrição</label>
-                    <textarea type="text" rows='5' class="form-control" id="description" name="description" required></textarea>
+                    <textarea 
+                        type="text" 
+                        rows='5' 
+                        class="form-control" 
+                        id="description" 
+                        name="description" 
+                        required
+                    >{{$product->descricao ?? ''}}</textarea>
                 </div>
                 <div class="form-group">
                     <label for="price">Preço</label>
-                    <input type="text" class="form-control" id="price" name="price" placeholder="100,00 ou maior" required>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        id="price" 
+                        name="price" 
+                        placeholder="100,00 ou maior" 
+                        value="{{$product->preco ?? ''}}"
+                        required
+                    >
                 </div>
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>

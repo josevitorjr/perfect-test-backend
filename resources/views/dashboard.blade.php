@@ -153,7 +153,7 @@
     <div id='products' class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Produtos
-            <a href='{{url("products")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Novo produto</a></h5>
+            <a href='{{url("products/create")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Novo produto</a></h5>
             @if (session('status'))
                 <div class="alert alert-success alert-dismissible fade show">
                     {{ session('status') }}
@@ -174,16 +174,16 @@
                         Ações
                     </th>
                 </tr>
-                @foreach($product as $product)
+                @foreach($products as $products)
                 <tr>
                     <td>
-                    {{$product->nome}}
+                    {{$products->nome}}
                     </td>
                     <td>
-                    R$ {{$product->preco}}
+                    R$ {{$products->preco}}
                     </td>
                     <td>
-                        <a href='' class='btn btn-primary'>Editar</a>
+                        <a href='{{url("products/$products->id/edit")}}' class='btn btn-primary'>Editar</a>
                         <a href='' class='btn btn-danger'>Deletar</a>
                     </td>
                 </tr>

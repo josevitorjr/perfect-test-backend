@@ -40,12 +40,12 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        $cad= $this->objProduct->create([
+        $insert = $this->objProduct->create([
             'nome'=>$request->name,
             'descricao'=>$request->description,
             'preco'=>$request->price
         ]);
-        if($cad){
+        if($insert){
             return redirect('/#products')->with('status', 'Produto Cadastrado Com Sucesso!');;
         }
     }
@@ -69,7 +69,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product= $this->objProduct->find($id);
+        return view('crud_products', compact('product'));
     }
 
     /**
@@ -81,7 +82,14 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        //
+        $update = $this->objProduct->where(['id'=>$id])->update([
+            'nome'=>$request->name,
+            'descricao'=>$request->description,
+            'preco'=>$request->price
+        ]);
+        if($update){
+            return redirect('/#products')->with('status', 'Produto Atualizado Com Sucesso!');;
+        }
     }
 
     /**
