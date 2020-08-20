@@ -36,5 +36,5 @@ Route::put('/sales/{id}', 'SaleController@update');
 
 Route::delete('/sales/{id}', 'SaleController@destroy');
 
-Route::get('/sales/search', 'SaleController@search');
+Route::post('/sales/search', 'SaleController@search');
 

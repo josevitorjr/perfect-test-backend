@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SaleRequest;
+use Illuminate\Http\Request;
 use App\Models\SaleModel;
 use App\Models\ProductModel;
 use App\Models\ClientModel;
@@ -68,9 +69,18 @@ class SaleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function search(){
-        $client = Input::get('client');
-        echo $client;
+    public function search(Request $request){
+        $dataIni = date('Y-m-d', strtotime($request->dataIni));
+        $dataFim = date('Y-m-d', strtotime($request->dataFim));
+        $sales = $this->objSale
+                            ->where('id_client','=',$request->client)
+                            ->WhereBetween('data',[$dataIni,$dataFim])
+                            ->paginate(10);
+
+        $products = $this->objProduct->paginate(10);
+        $clients = $this->objClient->paginate(10);
+        $results= $this->objSale->selectRaw('status, sum(quantidade) as quantidade, sum(quantidade*(products.preco-desconto)) as valor')->leftJoin('products', 'id_client', '=', 'products.id')->groupBy('status')->get();
+        return view('dashboard', compact('products','clients', 'sales', 'results'));
     }
 
     /**

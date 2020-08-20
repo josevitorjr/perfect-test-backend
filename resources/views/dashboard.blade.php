@@ -14,7 +14,7 @@
                         </button>
                     </div>
                 @endif
-            <form method="get" action="{{url('sales/search')}}">
+            <form method="post" action="{{url('sales/search')}}">
                 @csrf
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
@@ -22,7 +22,7 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Clientes</div>
                             </div>
-                            <select class="form-control" name="client" id="client">
+                            <select class="form-control" name="client" id="client" required>
                                 <option>Clientes</option>
                                 @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->nome}}</option>
@@ -31,12 +31,28 @@
                         </div>
                     </div>
                     <div class="col-sm-6 my-1">
-                        <label class="sr-only" for="period">Username</label>
+                        <label class="sr-only" for="period">Período</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Período</div>
                             </div>
-                            <input type="text" class="form-control date_range" name="period" id="period" placeholder="Username">
+                            
+                            <input 
+                                type="date" 
+                                class="form-control" 
+                                name="dataIni" 
+                                id="dataIni"
+                                value="{{date('Y-m-01')}}" 
+                                required
+                            >
+                            <input 
+                                type="date" 
+                                class="form-control" 
+                                name="dataFim" 
+                                id="dataFim"
+                                value="{{date('Y-m-d')}}" 
+                                required
+                            >
                         </div>
                     </div>
                     <div class="col-sm-1 my-1">
