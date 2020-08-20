@@ -101,7 +101,7 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $delete = $this->objClient->destroy($id);
-        return ($delete)?"Produto Deletado Com Sucesso!":"Falha ao Deletar o Produto!";
+        return ($delete)?"Cliente Deletado Com Sucesso!":"Falha ao Deletar o Cliente!";
 
     }
 }
