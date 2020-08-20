@@ -22,6 +22,7 @@
     </div>
 </div>
 <script src="{{ url('/js/app.js') }}"></script>
+<script src="{{ url('/js/main.js') }}"></script>
 <script src="https://kit.fontawesome.com/d712964458.js" crossorigin="anonymous"></script>
 @yield('script')
 </body>

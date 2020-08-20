@@ -100,6 +100,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = $this->objProduct->destroy($id);
+        return ($delete)?"Produto Deletado Com Sucesso!":"Falha ao Deletar o Produto!";
+
     }
 }

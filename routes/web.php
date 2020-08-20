@@ -15,6 +15,8 @@ Route::post('/products', 'ProductController@store');
 Route::get('/products/{id}/edit', 'ProductController@edit');
 Route::put('/products/{id}', 'ProductController@update');
 
+Route::delete('/products/{id}', 'ProductController@destroy');
+
 Route::get('/products/{id}', 'ProductController@show');
 
 Route::get('/sales', function () {

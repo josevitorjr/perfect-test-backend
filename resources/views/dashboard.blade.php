@@ -162,6 +162,7 @@
                     </button>
                 </div>
             @endif
+            @csrf
             <table class='table text-center'>
                 <tr>
                     <th scope="col">
@@ -183,8 +184,14 @@
                     R$ {{$products->preco}}
                     </td>
                     <td>
-                        <a href='{{url("products/$products->id/edit")}}' class='btn btn-primary'>Editar</a>
-                        <a href='' class='btn btn-danger'>Deletar</a>
+                        <a 
+                            href='{{url("products/$products->id/edit")}}' 
+                            class='btn btn-primary'
+                        >Editar</a>
+                        <a 
+                            href='{{url("products/$products->id")}}' 
+                            class='btn btn-danger delete'
+                        >Deletar</a>
                     </td>
                 </tr>
                 @endforeach 
