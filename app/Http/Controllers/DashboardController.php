@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ProductModel;
+use App\Models\ClientModel;
 
 class DashboardController extends Controller
 {
     private $objProduct;
+    private $objClient;
+
     public function __construct(){
-        $this->objProduct=new ProductModel();
+        $this->objProduct = new ProductModel();
+        $this->objClient = new ClientModel();
     }
     /**
      * Display a listing of the resource.
@@ -18,7 +22,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $products = $this->objProduct->paginate(20);
-        return view('dashboard', compact('products'));
+        $products = $this->objProduct->paginate(10);
+        $clients = $this->objClient->paginate(10);
+        return view('dashboard', compact('products','clients'));
     }
 }

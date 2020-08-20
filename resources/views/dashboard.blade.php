@@ -199,4 +199,60 @@
             {{$products->links()}}
         </div>
     </div>
+
+    <div id='clients' class='card mt-3'>
+        <div class='card-body'>
+            <h5 class="card-title mb-5">Clientes
+            <a href='{{url("clients/create")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Novo Cliente</a></h5>
+            @if (session('status'))
+                <div class="alert alert-success alert-dismissible fade show">
+                    {{ session('status') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @csrf
+            <table class='table text-center'>
+                <tr>
+                    <th scope="col">
+                        Nome
+                    </th>
+                    <th scope="col">
+                        CPF
+                    </th>
+                    <th scope="col">
+                        E-mail
+                    </th>
+                    <th scope="col">
+                        Ações
+                    </th>
+                </tr>
+                @foreach($clients as $client)
+                <tr>
+                    <td>
+                        {{$client->nome}}
+                    </td>
+                    <td>
+                        {{$client->cpf}}
+                    </td>
+                    <td>
+                        {{$client->email}}
+                    </td>
+                    <td>
+                        <a 
+                            href='{{url("clients/$client->id/edit")}}' 
+                            class='btn btn-primary'
+                        >Editar</a>
+                        <a 
+                            href='{{url("clients/$client->id")}}' 
+                            class='btn btn-danger delete'
+                        >Deletar</a>
+                    </td>
+                </tr>
+                @endforeach 
+            </table>
+            {{$clients->links()}}
+        </div>
+    </div>
 @endsection
