@@ -69,8 +69,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $product= $this->objClient->find($id);
-        return view('crud_products', compact('product'));
+        $client= $this->objClient->find($id);
+        return view('crud_clients', compact('client'));
     }
 
     /**
@@ -84,11 +84,11 @@ class ClientController extends Controller
     {
         $update = $this->objClient->where(['id'=>$id])->update([
             'nome'=>$request->name,
-            'descricao'=>$request->description,
-            'preco'=>$request->price
+            'email'=>$request->email,
+            'cpf'=>$request->cpf
         ]);
         if($update){
-            return redirect('/#products')->with('status', 'Produto Atualizado Com Sucesso!');;
+            return redirect('/#clients')->with('status', 'Cliente Atualizado Com Sucesso!');;
         }
     }
 
