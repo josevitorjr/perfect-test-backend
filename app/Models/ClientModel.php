@@ -8,4 +8,10 @@ class ClientModel extends Model
 {
     protected $table = 'clients';
     protected $fillable = ['nome','email','preco'];
+
+    public function relSales(){
+        return $this->hasMany('App\Models\SaleModel', 'id_client');
+    }
 }
+
+

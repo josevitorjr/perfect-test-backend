@@ -27,6 +27,14 @@ Route::put('/clients/{id}', 'ClientController@update');
 
 Route::delete('/clients/{id}', 'ClientController@destroy');
 
-Route::get('/sales', function () {
-    return view('crud_sales');
-});
+// Sales Routes
+Route::get('/sales/create', 'SaleController@create');
+Route::post('/sales', 'SaleController@store');
+
+Route::get('/sales/{id}/edit', 'SaleController@edit');
+Route::put('/sales/{id}', 'SaleController@update');
+
+Route::delete('/sales/{id}', 'SaleController@destroy');
+
+Route::get('/sales/search', 'SaleController@search');
+

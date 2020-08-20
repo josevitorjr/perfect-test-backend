@@ -2,34 +2,41 @@
 
 @section('content')
     <h1>Dashboard de vendas</h1>
-    <div class='card mt-3'>
+    <div id='sales' class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Tabela de vendas
-                <a href='{{url("/sales")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
-            <form>
+                <a href='{{url("/sales/create")}}' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i>  Nova venda</a></h5>
+                @if (session('status'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        {{ session('status') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+            <form method="get" action="{{url('sales/search')}}">
+                @csrf
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Clientes</div>
                             </div>
-                            <select class="form-control" id="inlineFormInputName">
+                            <select class="form-control" name="client" id="client">
                                 <option>Clientes</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                @foreach($clients as $client)
+                                    <option value="{{$client->id}}">{{$client->nome}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-6 my-1">
-                        <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+                        <label class="sr-only" for="period">Username</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Período</div>
                             </div>
-                            <input type="text" class="form-control date_range" id="inlineFormInputGroupUsername" placeholder="Username">
+                            <input type="text" class="form-control date_range" name="period" id="period" placeholder="Username">
                         </div>
                     </div>
                     <div class="col-sm-1 my-1">
@@ -53,49 +60,34 @@
                         Ações
                     </th>
                 </tr>
-                <tr>
-                    <td>
-                        Perfect Caps
-                    </td>
-                    <td>
-                        20/07/2019 19h15
-                    </td>
-                    <td>
-                        R$ 100,00
-                    </td>
-                    <td>
-                        <a href='' class='btn btn-primary'>Editar</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Nature Caps
-                    </td>
-                    <td>
-                        20/07/2019 19h20
-                    </td>
-                    <td>
-                        R$ 125,00
-                    </td>
-                    <td>
-                        <a href='' class='btn btn-primary'>Editar</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Libid Caps
-                    </td>
-                    <td>
-                        20/07/2019 19h45
-                    </td>
-                    <td>
-                        R$ 110,00
-                    </td>
-                    <td>
-                        <a href='' class='btn btn-primary'>Editar</a>
-                    </td>
-                </tr>
+                @foreach($sales as $sale)
+                    @php
+                        $saleProduct = $sale->find($sale->id)->relProducts;
+                    @endphp
+                    <tr>
+                        <td>
+                            {{$saleProduct->nome}}
+                        </td>
+                        <td>
+                            {{date('d/m/Y', strtotime($sale->data))}}
+                        </td>
+                        <td>
+                            R$ {{number_format($sale->quantidade*($saleProduct->preco-$sale->desconto), 2, ',', '.')}}
+                        </td>
+                        <td>
+                            <a 
+                                href='{{url("sales/$sale->id/edit")}}' 
+                                class='btn btn-primary'
+                            >Editar</a>
+                            <a 
+                                href='{{url("sales/$sale->id")}}' 
+                                class='btn btn-danger delete'
+                            >Deletar</a>
+                        </td>
+                    </tr>
+                @endforeach
             </table>
+            {{$sales->links()}}
         </div>
     </div>
     <div class='card mt-3'>
@@ -113,39 +105,19 @@
                         Valor Total
                     </th>
                 </tr>
-                <tr>
-                    <td>
-                        Vendidos
-                    </td>
-                    <td>
-                        100
-                    </td>
-                    <td>
-                        R$ 100,00
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Cancelados
-                    </td>
-                    <td>
-                        120
-                    </td>
-                    <td>
-                        R$ 100,00
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Devoluções
-                    </td>
-                    <td>
-                        120
-                    </td>
-                    <td>
-                        R$ 100,00
-                    </td>
-                </tr>
+                @foreach($results as $result)
+                    <tr>
+                        <td>
+                            {{$result->status}}
+                        </td>
+                        <td>
+                            {{$result->quantidade}}
+                        </td>
+                        <td>
+                            R$ {{number_format($result->valor, 2, ',', '.')}}
+                        </td>
+                    </tr>
+                @endforeach
             </table>
         </div>
     </div>
@@ -162,7 +134,6 @@
                     </button>
                 </div>
             @endif
-            @csrf
             <table class='table text-center'>
                 <tr>
                     <th scope="col">
@@ -181,7 +152,7 @@
                     {{$product->nome}}
                     </td>
                     <td>
-                    R$ {{$product->preco}}
+                    R$ {{number_format($product->preco, 2, ',', '.')}}
                     </td>
                     <td>
                         <a 
