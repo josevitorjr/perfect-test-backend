@@ -175,28 +175,28 @@
                         Ações
                     </th>
                 </tr>
-                @foreach($products as $products)
+                @foreach($products as $product)
                 <tr>
                     <td>
-                    {{$products->nome}}
+                    {{$product->nome}}
                     </td>
                     <td>
-                    R$ {{$products->preco}}
+                    R$ {{$product->preco}}
                     </td>
                     <td>
                         <a 
-                            href='{{url("products/$products->id/edit")}}' 
+                            href='{{url("products/$product->id/edit")}}' 
                             class='btn btn-primary'
                         >Editar</a>
                         <a 
-                            href='{{url("products/$products->id")}}' 
+                            href='{{url("products/$product->id")}}' 
                             class='btn btn-danger delete'
                         >Deletar</a>
                     </td>
                 </tr>
                 @endforeach 
-                
             </table>
+            {{$products->links()}}
         </div>
     </div>
 @endsection
