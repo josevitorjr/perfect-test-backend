@@ -5,20 +5,14 @@
     <div class='card'>
         <div class='card-body'>
             <form>
-                <h5>Informações do cliente</h5>
-                <div class="form-group">
-                    <label for="name">Nome do cliente</label>
-                    <input type="text" class="form-control " id="name">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" id="email">
-                </div>
-                <div class="form-group">
-                    <label for="cpf">CPF</label>
-                    <input type="text" class="form-control" id="cpf" placeholder="99999999999">
-                </div>
                 <h5 class='mt-5'>Informações da venda</h5>
+                <div class="form-group">
+                    <label for="client">Cliente</label>
+                    <select id="client" class="form-control">
+                        <option selected>Escolha...</option>
+                        <option>...</option>
+                    </select>
+                </div>
                 <div class="form-group">
                     <label for="product">Produto</label>
                     <select id="product" class="form-control">
